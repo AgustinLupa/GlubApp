@@ -45,6 +45,8 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Visibility(
         visible: isloaded,
+
+        // ignore: sort_child_properties_last
         child: ListView.builder(
           itemCount: aircraftViewModel?.length,
           itemBuilder: (context, index) {
@@ -52,11 +54,12 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Image.asset('lib/assets/imgs/glider-image.png'),
                   Text(
                     aircraftViewModel![index].plate,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
