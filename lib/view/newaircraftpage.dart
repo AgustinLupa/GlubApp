@@ -8,9 +8,9 @@ final List<String> listItems = [
 String? selectedValue;
 
 List<DropdownMenuItem<String>> _addDividersAfterItems(List<String> items) {
-  List<DropdownMenuItem<String>> _menuItems = [];
+  List<DropdownMenuItem<String>> menuItems = [];
   for (var item in items) {
-    _menuItems.addAll(
+    menuItems.addAll(
       [
         DropdownMenuItem<String>(
           value: item,
@@ -33,7 +33,7 @@ List<DropdownMenuItem<String>> _addDividersAfterItems(List<String> items) {
       ],
     );
   }
-  return _menuItems;
+  return menuItems;
 }
 
 class NewAircraft extends StatefulWidget {
@@ -49,13 +49,13 @@ class _NewAircraftState extends State<NewAircraft> {
     return Scaffold(
       backgroundColor: const Color(0xFFF1F4F8),
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: const Color.fromARGB(255, 70, 122, 242),
         automaticallyImplyLeading: false,
         title: const Text(
           'Agregar Aeronave',
           style: TextStyle(
             fontFamily: 'Lexend Deca',
-            color: Color(0xFF14181B),
+            color: Color.fromARGB(255, 255, 255, 255),
             fontSize: 24,
             fontWeight: FontWeight.normal,
           ),
@@ -66,7 +66,7 @@ class _NewAircraftState extends State<NewAircraft> {
             child: IconButton(
               icon: const Icon(
                 Icons.close_rounded,
-                color: Color(0xFF57636C),
+                color: Color.fromARGB(255, 255, 255, 255),
                 size: 30,
               ),
               onPressed: () async {
@@ -81,122 +81,148 @@ class _NewAircraftState extends State<NewAircraft> {
       body: SafeArea(
         child: GestureDetector(
           child: Form(
-            autovalidateMode: AutovalidateMode.disabled,
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
-                      child: TextFormField(
-                        obscureText: false,
-                        decoration: InputDecoration(
-                          labelText: 'Matricula',
-                          labelStyle: const TextStyle(
+              autovalidateMode: AutovalidateMode.disabled,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            16, 30, 16, 40),
+                        child: TextFormField(
+                          obscureText: false,
+                          decoration: InputDecoration(
+                            labelText: 'Matricula',
+                            labelStyle: const TextStyle(
+                              fontFamily: 'Lexend Deca',
+                              color: Color(0xFF57636C),
+                              fontSize: 20,
+                              fontWeight: FontWeight.normal,
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Color.fromARGB(255, 146, 191, 250),
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Color.fromARGB(255, 146, 191, 250),
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Color.fromARGB(255, 146, 191, 250),
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Color.fromARGB(255, 146, 191, 250),
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            contentPadding:
+                                const EdgeInsetsDirectional.fromSTEB(
+                                    20, 32, 20, 12),
+                          ),
+                          style: const TextStyle(
                             fontFamily: 'Lexend Deca',
+                            color: Color(0xFF14181B),
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          textAlign: TextAlign.start,
+                          maxLength: 6,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            16, 12, 16, 25),
+                        child: DropdownButton2(
+                          isExpanded: true,
+                          dropdownDecoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(14),
+                            border: Border.all(
+                              color: const Color.fromARGB(255, 63, 177, 253),
+                              width: 1.5,
+                            ),
+                          ),
+                          buttonDecoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                              color: const Color.fromARGB(255, 63, 177, 253),
+                            ),
+                          ),
+                          hint: Text(
+                            'Tipo de aeronave',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontFamily: 'Lexend Deca',
+                              color: Theme.of(context).hintColor,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                          items: _addDividersAfterItems(listItems),
+                          value: selectedValue,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedValue = value as String;
+                            });
+                          },
+                          buttonHeight: 50,
+                          dropdownMaxHeight: 300,
+                          buttonWidth: 400,
+                          itemPadding:
+                              const EdgeInsets.symmetric(horizontal: 2.0),
+                          icon: const Icon(
+                            Icons.keyboard_arrow_down_rounded,
                             color: Color(0xFF57636C),
-                            fontSize: 20,
-                            fontWeight: FontWeight.normal,
+                            size: 40,
                           ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 146, 191, 250),
-                              width: 2,
-                            ),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 146, 191, 250),
-                              width: 2,
-                            ),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          errorBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 146, 191, 250),
-                              width: 2,
-                            ),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          focusedErrorBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 146, 191, 250),
-                              width: 2,
-                            ),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          contentPadding: const EdgeInsetsDirectional.fromSTEB(
-                              20, 32, 20, 12),
                         ),
-                        style: const TextStyle(
+                      ),
+                      const Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 200),
+                    child: MaterialButton(
+                      onPressed: () async {
+                        //if () {
+                        //return;
+                        //}
+                      },
+                      minWidth: 270,
+                      height: 50,
+                      color: const Color(0xFF4B39EF),
+                      elevation: 3,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0)),
+                      child: const Text(
+                        'Crear Aeronave',
+                        style: TextStyle(
                           fontFamily: 'Lexend Deca',
-                          color: Color(0xFF14181B),
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        textAlign: TextAlign.start,
-                        maxLength: 6,
-                      ),
-                    ),
-                    Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
-                      child: DropdownButton2(
-                        isExpanded: true,
-                        dropdownDecoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(14),
-                          border: Border.all(
-                            color: const Color.fromARGB(255, 63, 177, 253),
-                            width: 1.5,
-                          ),
-                        ),
-                        buttonDecoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                            color: const Color.fromARGB(255, 63, 177, 253),
-                          ),
-                        ),
-                        hint: Text(
-                          'Tipo de aeronave',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontFamily: 'Lexend Deca',
-                            color: Theme.of(context).hintColor,
-                            fontWeight: FontWeight.normal,
-                          ),
-                        ),
-                        items: _addDividersAfterItems(listItems),
-                        value: selectedValue,
-                        onChanged: (value) {
-                          setState(() {
-                            selectedValue = value as String;
-                          });
-                        },
-                        buttonHeight: 50,
-                        dropdownMaxHeight: 300,
-                        buttonWidth: 400,
-                        itemPadding:
-                            const EdgeInsets.symmetric(horizontal: 2.0),
-                        icon: const Icon(
-                          Icons.keyboard_arrow_down_rounded,
-                          color: Color(0xFF57636C),
-                          size: 40,
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.normal,
                         ),
                       ),
                     ),
-                    const Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
+                  ),
+                ],
+              )),
         ),
       ),
     );

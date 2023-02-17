@@ -10,10 +10,8 @@ class Error404 extends StatefulWidget {
 class _Error404State extends State<Error404> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: AppBar(
-        title: const Text('error404'),
-      ),
+    return AppBar(
+      title: const Text('error404'),
     );
   }
 }
