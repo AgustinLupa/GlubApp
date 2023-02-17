@@ -1,88 +1,58 @@
 import 'package:flutter/material.dart';
-import 'package:glubapp/models/aircrafts.dart';
-import 'package:glubapp/models/aircraftsviewmodel.dart';
-import 'package:glubapp/services/remote_services.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  List<Aircrafts>? aircrafts;
-  List<AircraftViewModel>? aircraftViewModel = List.empty(growable: true);
-  var isloaded = false;
-
-  @override
-  void initState() {
-    super.initState();
-
-    getData();
-  }
-
-  getData() async {
-    aircrafts = await RemoteService().getAll();
-
-    if (aircrafts != null) {
-      AircraftViewModel air;
-      for (Aircrafts aircraft in aircrafts!) {
-        air = AircraftViewModel(aircraft);
-        aircraftViewModel?.add(air);
-      }
-      setState(() {
-        isloaded = true;
-      });
-    }
-  }
+class SplashScreen extends StatelessWidget {
+  const SplashScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Aircrafts'),
-      ),
-      body: Visibility(
-        visible: isloaded,
-
-        // ignore: sort_child_properties_last
-        child: ListView.builder(
-          itemCount: aircraftViewModel?.length,
-          itemBuilder: (context, index) {
-            return Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Image.asset('lib/assets/imgs/glider-image.png'),
-                  Text(
-                    aircraftViewModel![index].plate,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    aircraftViewModel![index].aircraftType.toString(),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Text(
-                    aircraftViewModel![index].isFlying.toString(),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
+      body: Container(
+        width: double.infinity,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('lib/assets/imgs/backgound-image.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        //color: Colors.lightBlue,
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Image.asset(
+                'lib/assets/imgs/glider-image.png',
+                fit: BoxFit.cover,
               ),
-            );
-          },
-        ),
-        replacement: const Center(
-          child: CircularProgressIndicator(),
-        ),
+              MaterialButton(
+                elevation: 5,
+                minWidth: 200.0,
+                height: 120.0,
+                color: Theme.of(context).primaryColor,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0)),
+                child: Text(
+                  "Listar aeronaves",
+                  style: Theme.of(context).textTheme.displayLarge,
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, "/list");
+                },
+              ),
+              MaterialButton(
+                elevation: 5,
+                minWidth: 200.0,
+                height: 120.0,
+                color: Theme.of(context).primaryColor,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0)),
+                child: Text(
+                  "Aeronaves en vuelo",
+                  style: Theme.of(context).textTheme.displayLarge,
+                ),
+                onPressed: () {},
+              ),
+            ]),
       ),
+      backgroundColor: const Color.fromARGB(255, 109, 183, 243),
     );
   }
 }

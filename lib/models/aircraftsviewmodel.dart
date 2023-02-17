@@ -4,7 +4,7 @@ class AircraftViewModel {
   AircraftViewModel(Aircrafts aircrafts) {
     id = aircrafts.id;
     plate = aircrafts.plate;
-    aircrafts.aircraftType == 0
+    aircrafts.aircraftType == 1
         ? aircraftType = 'Avion'
         : aircraftType = 'Planeador';
     aircrafts.isFlying == false
