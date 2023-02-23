@@ -7,13 +7,13 @@ class AircraftViewModel {
     aircrafts.aircraftType == 1
         ? aircraftType = 'Avion'
         : aircraftType = 'Planeador';
-    aircrafts.isFlying == false
+    aircrafts.auxIsFlying == false
         ? isFlying = 'En tierra'
         : isFlying = 'En vuelo';
   }
 
-  late int id;
-  late String plate;
+  late int? id;
+  late String? plate;
   late String aircraftType;
   late String isFlying;
 }

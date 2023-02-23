@@ -8,22 +8,24 @@ String aircraftsToJson(List<Aircrafts> data) =>
 
 class Aircrafts {
   Aircrafts({
-    required this.id,
+    this.id,
     required this.plate,
     required this.aircraftType,
-    required this.isFlying,
+    this.isFlying,
+    this.auxIsFlying,
   });
 
-  int id;
-  String plate;
+  int? id;
+  String? plate;
   int aircraftType;
-  bool isFlying;
+  int? isFlying;
+  bool? auxIsFlying;
 
   factory Aircrafts.fromJson(Map<String, dynamic> json) => Aircrafts(
         id: json["id"],
         plate: json["plate"],
         aircraftType: json["aircraftType"],
-        isFlying: json["isFlying"],
+        auxIsFlying: json["isFlying"],
       );
 
   Map<String, dynamic> toJson() => {

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:glubapp/models/aircrafts.dart';
 import 'package:glubapp/models/aircraftsviewmodel.dart';
 import 'package:glubapp/services/remote_services.dart';
-import 'package:glubapp/view/newaircraftpage.dart';
+
+import 'modifaircraft.dart';
 
 Color getColorFromResponse(String response) {
   if (response == "En tierra") {
@@ -29,6 +30,15 @@ class _ListAircraftPageState extends State<ListAircraftPage> {
     super.initState();
 
     getData();
+  }
+
+  Future<void> _showModifAircraft(
+      BuildContext context, AircraftViewModel aircraftViewModel) async {
+    return showDialog<void>(
+        context: context,
+        builder: ((context) => ModifAircraft(
+              aircraftViewModel: aircraftViewModel,
+            )));
   }
 
   getData() async {
@@ -116,8 +126,9 @@ class _ListAircraftPageState extends State<ListAircraftPage> {
                                   'Desea modificar la aeronave ${aircraftViewModel![index].plate.toString()}?'),
                               actions: [
                                 TextButton(
-                                  onPressed: () =>
-                                      Navigator.pop(alertDialogContext),
+                                  onPressed: () => _showModifAircraft(
+                                      alertDialogContext,
+                                      aircraftViewModel![index]),
                                   child: const Text(' Modificar '),
                                 ),
                                 TextButton(

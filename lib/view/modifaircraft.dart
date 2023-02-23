@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:glubapp/models/aircrafts.dart';
 import 'package:glubapp/models/aircraftsviewmodel.dart';
-import 'package:glubapp/services/remote_services.dart';
 
 final List<String> listItems = [
   'Avion',
   'Planeador',
 ];
 String? selectedValue;
-String? plateValue;
 
 List<DropdownMenuItem<String>> _addDividersAfterItems(List<String> items) {
   List<DropdownMenuItem<String>> menuItems = [];
@@ -40,66 +37,12 @@ List<DropdownMenuItem<String>> _addDividersAfterItems(List<String> items) {
   return menuItems;
 }
 
-String dropdownValue = 'Seleccione una opción';
+class ModifAircraft extends StatelessWidget {
+  final AircraftViewModel aircraftViewModel;
 
-Future _submitForm(BuildContext context) async {
-  if (selectedValue == '' ||
-      plateValue == '' ||
-      selectedValue == null ||
-      plateValue == null) {
-    return showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Error'),
-          content: const Text('Por favor ingrese todos los campos.'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('OK'),
-            ),
-          ],
-        );
-      },
-    );
-  } else {
-    int auxValue = 2;
-    if (selectedValue == 'Avion') {
-      auxValue = 1;
-    } else if (selectedValue == 'Planeador') {
-      auxValue = 0;
-    }
-    Aircrafts aircrafts = Aircrafts(
-        plate: plateValue?.toUpperCase(), aircraftType: auxValue, isFlying: 0);
-    final AircraftViewModel aircraftView = AircraftViewModel(aircrafts);
-    var result = await RemoteService().addAircraft(aircraftView);
-    // ignore: use_build_context_synchronously
-    return showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Éxito'),
-          content: Text(result),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('OK'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-}
+  const ModifAircraft({Key? key, required this.aircraftViewModel})
+      : super(key: key);
 
-class NewAircraft extends StatefulWidget {
-  const NewAircraft({super.key});
-
-  @override
-  State<NewAircraft> createState() => _NewAircraftState();
-}
-
-class _NewAircraftState extends State<NewAircraft> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -108,7 +51,7 @@ class _NewAircraftState extends State<NewAircraft> {
         backgroundColor: const Color.fromARGB(255, 70, 122, 242),
         automaticallyImplyLeading: false,
         title: const Text(
-          'Agregar Aeronave',
+          'Modificar Aeronave',
           style: TextStyle(
             fontFamily: 'Lexend Deca',
             color: Color.fromARGB(255, 255, 255, 255),
@@ -149,6 +92,7 @@ class _NewAircraftState extends State<NewAircraft> {
                         padding: const EdgeInsetsDirectional.fromSTEB(
                             16, 30, 16, 40),
                         child: TextFormField(
+                          initialValue: aircraftViewModel.plate.toString(),
                           obscureText: false,
                           decoration: InputDecoration(
                             labelText: 'Matricula',
@@ -190,11 +134,6 @@ class _NewAircraftState extends State<NewAircraft> {
                                 const EdgeInsetsDirectional.fromSTEB(
                                     20, 32, 20, 12),
                           ),
-                          onChanged: (value) {
-                            setState(() {
-                              plateValue = value;
-                            });
-                          },
                           style: const TextStyle(
                             fontFamily: 'Lexend Deca',
                             color: Color(0xFF14181B),
@@ -235,9 +174,7 @@ class _NewAircraftState extends State<NewAircraft> {
                           items: _addDividersAfterItems(listItems),
                           value: selectedValue,
                           onChanged: (value) {
-                            setState(() {
-                              selectedValue = value as String;
-                            });
+                            selectedValue = value as String;
                           },
                           buttonHeight: 50,
                           dropdownMaxHeight: 300,
@@ -258,10 +195,12 @@ class _NewAircraftState extends State<NewAircraft> {
                   ),
                   Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 130),
+                        const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 200),
                     child: MaterialButton(
                       onPressed: () async {
-                        _submitForm(context);
+                        //if () {
+                        //return;
+                        //}
                       },
                       minWidth: 270,
                       height: 50,
@@ -270,7 +209,7 @@ class _NewAircraftState extends State<NewAircraft> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0)),
                       child: const Text(
-                        'Crear Aeronave',
+                        'Modificar Aeronave',
                         style: TextStyle(
                           fontFamily: 'Lexend Deca',
                           color: Colors.white,
