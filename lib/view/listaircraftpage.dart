@@ -41,6 +41,23 @@ class _ListAircraftPageState extends State<ListAircraftPage> {
             )));
   }
 
+  Future<Future> _putInFlight(BuildContext context, String plate) async {
+    final result = await RemoteService().putInFlight(plate);
+    // ignore: use_build_context_synchronously
+    return showDialog(
+        context: context,
+        builder: ((context) => AlertDialog(
+              title: const Text('Resultado'),
+              content: Text(result),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('Aceptar'),
+                ),
+              ],
+            )));
+  }
+
   getData() async {
     aircrafts = await RemoteService().getAll();
 
@@ -132,8 +149,11 @@ class _ListAircraftPageState extends State<ListAircraftPage> {
                                   child: const Text(' Modificar '),
                                 ),
                                 TextButton(
-                                  onPressed: () =>
-                                      Navigator.pop(alertDialogContext),
+                                  onPressed: () => _putInFlight(
+                                      context,
+                                      aircraftViewModel![index]
+                                          .plate
+                                          .toString()),
                                   child: const Text(' Poner en vuelo '),
                                 ),
                                 TextButton(

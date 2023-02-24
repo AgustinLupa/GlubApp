@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:glubapp/models/aircraftsviewmodel.dart';
 
+import '../services/remote_services.dart';
+
 final List<String> listItems = [
   'Avion',
   'Planeador',
 ];
 String? selectedValue;
+String? plateValue;
+String? oldPlateValue;
 
 List<DropdownMenuItem<String>> _addDividersAfterItems(List<String> items) {
   List<DropdownMenuItem<String>> menuItems = [];
@@ -37,12 +41,35 @@ List<DropdownMenuItem<String>> _addDividersAfterItems(List<String> items) {
   return menuItems;
 }
 
-class ModifAircraft extends StatelessWidget {
+Future<Future> _modifAircraft(
+    BuildContext context, String oldplate, String newPlate, String type) async {
+  final result = await RemoteService().modifAircraft(oldplate, newPlate, type);
+  // ignore: use_build_context_synchronously
+  return showDialog(
+      context: context,
+      builder: ((context) => AlertDialog(
+            title: const Text('Resultado'),
+            content: Text(result),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('Aceptar'),
+              ),
+            ],
+          )));
+}
+
+class ModifAircraft extends StatefulWidget {
   final AircraftViewModel aircraftViewModel;
 
   const ModifAircraft({Key? key, required this.aircraftViewModel})
       : super(key: key);
 
+  @override
+  State<ModifAircraft> createState() => _ModifAircraftState();
+}
+
+class _ModifAircraftState extends State<ModifAircraft> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,7 +119,9 @@ class ModifAircraft extends StatelessWidget {
                         padding: const EdgeInsetsDirectional.fromSTEB(
                             16, 30, 16, 40),
                         child: TextFormField(
-                          initialValue: aircraftViewModel.plate.toString(),
+                          onChanged: (value) => plateValue = value,
+                          initialValue: oldPlateValue =
+                              widget.aircraftViewModel.plate.toString(),
                           obscureText: false,
                           decoration: InputDecoration(
                             labelText: 'Matricula',
@@ -174,7 +203,9 @@ class ModifAircraft extends StatelessWidget {
                           items: _addDividersAfterItems(listItems),
                           value: selectedValue,
                           onChanged: (value) {
-                            selectedValue = value as String;
+                            setState(() {
+                              selectedValue = value as String;
+                            });
                           },
                           buttonHeight: 50,
                           dropdownMaxHeight: 300,
@@ -198,9 +229,8 @@ class ModifAircraft extends StatelessWidget {
                         const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 200),
                     child: MaterialButton(
                       onPressed: () async {
-                        //if () {
-                        //return;
-                        //}
+                        _modifAircraft(context, oldPlateValue!, plateValue!,
+                            selectedValue!);
                       },
                       minWidth: 270,
                       height: 50,
