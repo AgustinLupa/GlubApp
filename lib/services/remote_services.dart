@@ -51,7 +51,7 @@ class RemoteService {
       headers: {'Content-Type': 'application/json'},
     );
     if (response.statusCode == 200) {
-      result = 'Se agrego correctamente';
+      result = 'Se actualizo correctamente';
       return result;
     } else {
       result = 'Ocurrio un error a la hora de poner en vuelo';
@@ -60,15 +60,17 @@ class RemoteService {
   }
 
   Future<String> modifAircraft(
-      String oldPlate, String newPlate, String type) async {
+      String oldPlateAir, String newPlate, String type) async {
     var client = http.Client();
-    var uri =
-        Uri.parse('http://www.glubappapi.somee.com/api/aircrafts/$oldPlate');
+    var uri = Uri.parse('http://www.glubappapi.somee.com/api/aircrafts');
     final String result;
     final int auxType;
     type == 'Avion' ? auxType = 1 : auxType = 0;
-    var aircraf =
-        Aircrafts(plate: newPlate, aircraftType: auxType, isFlying: 0);
+    var aircraf = Aircrafts(
+        plate: newPlate,
+        aircraftType: auxType,
+        isFlying: 0,
+        oldPlate: oldPlateAir);
     final bodyrequest = jsonEncode(aircraf);
     var response = await client.put(
       uri,
@@ -76,7 +78,7 @@ class RemoteService {
       body: bodyrequest,
     );
     if (response.statusCode == 200) {
-      result = 'Se agrego correctamente';
+      result = 'Se modifico correctamente';
       return result;
     } else {
       result = 'Ocurrio un error a la hora de poner en vuelo';

@@ -10,10 +10,14 @@ class AircraftViewModel {
     aircrafts.auxIsFlying == false
         ? isFlying = 'En tierra'
         : isFlying = 'En vuelo';
+    latitude = aircrafts.latitude;
+    longitude = aircrafts.longitude;
   }
 
   late int? id;
   late String? plate;
   late String aircraftType;
   late String isFlying;
+  int? latitude;
+  int? longitude;
 }

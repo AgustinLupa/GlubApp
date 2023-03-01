@@ -226,11 +226,11 @@ class _ModifAircraftState extends State<ModifAircraft> {
                   ),
                   Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 200),
+                        const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 130),
                     child: MaterialButton(
                       onPressed: () async {
-                        _modifAircraft(context, oldPlateValue!, plateValue!,
-                            selectedValue!);
+                        _modifAircraft(context, oldPlateValue!,
+                            plateValue!.toUpperCase(), selectedValue!);
                       },
                       minWidth: 270,
                       height: 50,

@@ -51,7 +51,7 @@ class _ListAircraftPageState extends State<ListAircraftPage> {
               content: Text(result),
               actions: [
                 TextButton(
-                  onPressed: () => Navigator.pop(context),
+                  onPressed: () => Navigator.pushNamed(context, "/list"),
                   child: const Text('Aceptar'),
                 ),
               ],
@@ -134,6 +134,8 @@ class _ListAircraftPageState extends State<ListAircraftPage> {
                   itemBuilder: (context, index) {
                     return InkWell(
                       onTap: () async {
+                        String currentState =
+                            aircraftViewModel![index].isFlying.toString();
                         await showDialog(
                           context: context,
                           builder: (alertDialogContext) {
@@ -154,7 +156,9 @@ class _ListAircraftPageState extends State<ListAircraftPage> {
                                       aircraftViewModel![index]
                                           .plate
                                           .toString()),
-                                  child: const Text(' Poner en vuelo '),
+                                  child: Text(currentState == 'En tierra'
+                                      ? ' Poner en vuelo '
+                                      : ' Poner en tierra '),
                                 ),
                                 TextButton(
                                   onPressed: () =>

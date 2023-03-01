@@ -13,6 +13,9 @@ class Aircrafts {
     required this.aircraftType,
     this.isFlying,
     this.auxIsFlying,
+    this.latitude,
+    this.longitude,
+    this.oldPlate,
   });
 
   int? id;
@@ -20,18 +23,25 @@ class Aircrafts {
   int aircraftType;
   int? isFlying;
   bool? auxIsFlying;
+  int? latitude;
+  int? longitude;
+  String? oldPlate;
 
   factory Aircrafts.fromJson(Map<String, dynamic> json) => Aircrafts(
-        id: json["id"],
-        plate: json["plate"],
-        aircraftType: json["aircraftType"],
-        auxIsFlying: json["isFlying"],
-      );
+      id: json["id"],
+      plate: json["plate"],
+      aircraftType: json["aircraftType"],
+      auxIsFlying: json["isFlying"],
+      latitude: json["latitude"],
+      longitude: json["longitude"]);
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "plate": plate,
+        "Newplate": plate,
         "aircraftType": aircraftType,
         "isFlying": isFlying,
+        "latitude": latitude,
+        "longitude": longitude,
+        "Plate": oldPlate
       };
 }
